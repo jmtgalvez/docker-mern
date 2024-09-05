@@ -5,6 +5,10 @@ const itemSchema = new Schema({
     required: true,
   },
   body: String,
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = model("Items", itemSchema);

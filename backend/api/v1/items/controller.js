@@ -6,12 +6,16 @@ exports.newItem = async ({ title, body }) => {
 };
 
 exports.getItems = async () => {
-  const items = Item.find();
+  const items = Item.find().sort({ date: -1 });
   return items;
 };
 
 exports.editItem = async ({ id, title, body }) => {
-  const item = await Item.findByIdAndUpdate(id, { title, body });
+  const item = await Item.findByIdAndUpdate(
+    id,
+    { title, body },
+    { returnDocument: "after" }
+  );
   return item;
 };
 

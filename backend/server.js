@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cors = require("cors");
 const express = require("express");
 const app = express();
 
@@ -6,7 +7,19 @@ const connectDB = require("./utils/db");
 
 const PORT = process.env.PORT || 5000;
 
+console.log(process.env.APP_URL);
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(
+  cors({
+    origin: [
+      `${process.env.APP_URL}`,
+      "http://localhost:5173",
+      "http://localhost:4173",
+    ],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
 app.use("/api", require("./api"));
 

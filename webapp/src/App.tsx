@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import type { ItemType } from "./utils/definitions";
+import ItemForm from "./components/ItemForm";
+import "./App.css";
+import ItemCard from "./components/ItemCard";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [items, setItems] = useState<ItemType[]>([]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/items`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setItems(data.items);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="p-4 lg:px-24 flex flex-wrap gap-4">
+      <ItemForm setItems={setItems} />
+      {items.map((item: ItemType) => (
+        <ItemCard key={item["_id"]} item={item} setItems={setItems} />
+      ))}
+    </div>
+  );
 }
-
-export default App
