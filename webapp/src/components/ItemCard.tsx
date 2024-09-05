@@ -56,11 +56,14 @@ export default function ItemCard({
   return (
     <>
       {isEditing ? (
-        <form className="w-1/5 border flex flex-col" onSubmit={handleEdit}>
+        <form
+          className="w-full lg:w-1/5 border flex flex-col shadow-md"
+          onSubmit={handleEdit}
+        >
           <input
             type="text"
             name="title"
-            className="p-2 font-bold disabled:bg-transparent disable:resize-none"
+            className="p-2 font-bold  disabled:bg-transparent disable:resize-none"
             defaultValue={item.title}
           />
           <textarea
@@ -82,7 +85,7 @@ export default function ItemCard({
           </div>
         </form>
       ) : (
-        <div className="w-1/5 border flex flex-col">
+        <div className="w-full lg:w-1/5 border flex flex-col shadow-md">
           <h3 className="p-2 font-bold disabled:bg-transparent disable:resize-none">
             {item.title}
           </h3>

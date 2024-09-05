@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { ItemType } from "../utils/definitions";
 
 export default function ItemForm({
@@ -6,6 +6,7 @@ export default function ItemForm({
 }: {
   setItems: Dispatch<SetStateAction<ItemType[]>>;
 }) {
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     let formData = new FormData(e.target as HTMLFormElement);
@@ -30,8 +31,20 @@ export default function ItemForm({
   }
 
   return (
-    <div className="w-full lg:w-1/5 p-4 border">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+    <div className="w-full m-auto border shadow-md">
+      <div
+        className="p-4 hover:bg-gray-100 font-bold flex justify-between border-b"
+        onClick={() => setIsCollapsed(!isCollapsed)}
+      >
+        <p>Create Own</p>
+        <span>{isCollapsed ? "+" : "-"}</span>
+      </div>
+      <form
+        onSubmit={handleSubmit}
+        className={`p-4 flex flex-col gap-2 ${
+          isCollapsed ? "hidden" : "block"
+        } lg:flex`}
+      >
         <div className="flex flex-col gap-1 text-left">
           <label htmlFor="title">Title:</label>
           <input className="p-2 border" type="text" name="title" required />
