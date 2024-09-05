@@ -7,7 +7,6 @@ const connectDB = require("./utils/db");
 
 const PORT = process.env.PORT || 5000;
 
-console.log(process.env.APP_URL);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
